@@ -28,3 +28,10 @@ services:
       - "8000:8000"
     depends_on:
       - source_db
+  
+    etl:
+      build: ./etl            
+      container_name: etl
+      depends_on:
+        - api
+        - target_db

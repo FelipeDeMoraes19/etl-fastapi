@@ -1,0 +1,14 @@
+.venv/
+env/
+venv/
+
+__pycache__/
+*.py[cod]
+*.pyo
+
+*/tests/**
+pandas/tests/**
+
+.git/
+node_modules/
+*.log

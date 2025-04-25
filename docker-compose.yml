@@ -20,7 +20,7 @@ services:
       POSTGRES_DB: target_db
     ports:
       - "5433:5432"
-  
+
   api:
     build: ./api            
     container_name: api
@@ -28,10 +28,29 @@ services:
       - "8000:8000"
     depends_on:
       - source_db
-  
-    etl:
-      build: ./etl            
-      container_name: etl
+
+  etl:
+    build: ./etl            
+    container_name: etl
+    depends_on:
+      - api
+      - target_db
+
+  dagster:
+      build:
+        context: .              
+        dockerfile: etl_orch/Dockerfile
+      container_name: dagster
+      ports:
+        - "3000:3000"
+      environment:
+        DAGSTER_HOME: /app/dagster_home
+      volumes:
+        - dagster_data:/app/dagster_home
       depends_on:
         - api
         - target_db
+
+
+volumes:
+  dagster_data:

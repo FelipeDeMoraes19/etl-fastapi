@@ -20,3 +20,11 @@ services:
       POSTGRES_DB: target_db
     ports:
       - "5433:5432"
+  
+  api:
+    build: ./api            
+    container_name: api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - source_db
